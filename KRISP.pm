@@ -57,7 +57,7 @@ sub krisp_search {
 	my $data, @d;
 	my $ret, @ars;
 
-	@ars = qw (key ip netmask network broadcast icode iname gcode gname);
+	@ars = qw (key ip netmask network broadcast icode iname gcode gname gcity);
 
 	$data = krisp_search_pl ($dbh, $host);
 
@@ -65,7 +65,7 @@ sub krisp_search {
 
 	@d = split /:/, $data;
 
-	for my $i ( 0 .. 8 ) {
+	for my $i ( 0 .. 9 ) {
 		$ret->{"$ars[$i]"} = $d[$i];
 	}
 

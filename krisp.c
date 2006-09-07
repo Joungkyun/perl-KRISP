@@ -1,5 +1,5 @@
 /*
- * $Id: krisp.c,v 1.1.1.1 2006-06-26 12:35:06 oops Exp $
+ * $Id: krisp.c,v 1.2 2006-09-07 14:49:03 oops Exp $
  */
 
 #include <stdio.h>
@@ -44,11 +44,6 @@ KR_API * krisp_open_pl (char *datafile) {
 	}
 
 	db = (KR_API *) malloc (sizeof (KR_API));
-#ifdef HAVE_LIBGEOIP
-	db->gi = GeoIP_new (GEOIP_MEMORY_CACHE);
-#else
-	db->gi = NULL;
-#endif
 
 	if ( kr_open (db, datafile) ) {
 		strcpy (krerr, dberr);
@@ -74,9 +69,9 @@ char * krisp_search_pl (KR_API *db, char *host) {
 		return NULL;
 	}
 
-	sprintf (ret, "%s:%s:%s:%s:%s:%s:%s:%s:%s",
+	sprintf (ret, "%s:%s:%s:%s:%s:%s:%s:%s:%s:%s",
 			isp.key, isp.ip, isp.netmask, isp.network, isp.broadcast,
-			isp.icode, isp.iname, isp.gcode, isp.gname);
+			isp.icode, isp.iname, isp.gcode, isp.gname, isp.gcity);
 
 	return ret;
 }
