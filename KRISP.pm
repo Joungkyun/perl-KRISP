@@ -7,7 +7,7 @@ require Exporter;
 require DynaLoader;
 
 @ISA = qw(Exporter DynaLoader);
-$VERSION = "1.0.0";
+$VERSION = "1.1.0";
 
 package KRISP;
 bootstrap KRISP;
