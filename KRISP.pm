@@ -7,7 +7,7 @@ require Exporter;
 require DynaLoader;
 
 @ISA = qw(Exporter DynaLoader);
-$VERSION = "1.1.0";
+$VERSION = "1.1.1";
 
 package KRISP;
 bootstrap KRISP;
@@ -17,6 +17,9 @@ package KRISP;
 
 sub new {
 	my $self = {};
+
+	my ($dummy, $city) = @_;
+	$self->{city} = $city ? 1 : 0;
 
 	return bless $self;
 }
@@ -44,7 +47,7 @@ sub krisp_open {
 	my ($datafile) = @_;
 	my $r;
 
-	$r = krisp_open_pl ($datafile);
+	$r = krisp_open_pl ($datafile, $self->{city});
 
 	return "" if ( $r == NULL );
 

@@ -221,7 +221,7 @@ SWIG_TypeClientData(swig_type_info *ti, void *clientdata) {
  * perl5.swg
  *
  * Perl5 runtime library
- * $Header: /data/mirror/cvs/perl/KRISP/krisp_wrap.c,v 1.1.1.1 2006-06-26 12:35:06 oops Exp $
+ * $Header: /data/mirror/cvs/perl/KRISP/krisp_wrap.c,v 1.2 2006-09-15 09:35:38 oops Exp $
  * ----------------------------------------------------------------------------- */
 
 #define SWIGPERL
@@ -611,7 +611,7 @@ extern char dberr[1024];
 extern char *krisp_version_pl(void);
 extern char *krisp_uversion_pl(void);
 extern char *krisp_error_pl(void);
-extern int *krisp_open_pl(char *);
+extern int *krisp_open_pl(char *,int);
 extern char *krisp_search_pl(int *,char *);
 extern void krisp_close_pl(int *);
 #ifdef PERL_OBJECT
@@ -875,16 +875,18 @@ XS(_wrap_krisp_open_pl) {
     const char *_swigerr = _swigmsg;
     {
         char *arg1 ;
+        int arg2 ;
         int *result;
         int argvi = 0;
         dXSARGS;
         
-        if ((items < 1) || (items > 1)) {
-            SWIG_croak("Usage: krisp_open_pl(char *);");
+        if ((items < 2) || (items > 2)) {
+            SWIG_croak("Usage: krisp_open_pl(char *,int);");
         }
         if (!SvOK((SV*) ST(0))) arg1 = 0;
         else arg1 = (char *) SvPV(ST(0), PL_na);
-        result = (int *)krisp_open_pl(arg1);
+        arg2 = (int) SvIV(ST(1));
+        result = (int *)krisp_open_pl(arg1,arg2);
         
         ST(argvi) = sv_newmortal();
         SWIG_MakePtr(ST(argvi++), (void *) result, SWIGTYPE_p_int,0);

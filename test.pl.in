@@ -6,9 +6,12 @@ use KRISP;
 my $kr;
 my $c;
 my $isp;
-my @ispkey = qw (key ip netmask network broadcast icode iname gcode gname);
+my @ispkey = qw (key ip netmask network broadcast icode iname gcode gname gcity);
 
-$kr = KRISP->new ();
+# argumnet set 1, search geoip city database if enabled..
+# argument set 0, don't search geoip city datbase whether if enabled..
+#
+$kr = KRISP->new (1);
 
 printf "LIBKRISP Version: %s\nLIBKRISP uVersion: %s\n",
 		$kr->krisp_version (), $kr->krisp_uversion ();
@@ -20,7 +23,7 @@ if ( ! $c ) {
 	exit (1);
 }
 
-$isp = $kr->krisp_search ($c, "oops.org");
+$isp = $kr->krisp_search ($c, "kldp.org");
 my $err = $kr->krisp_error ();
 
 if ( ! $isp || $err ) {

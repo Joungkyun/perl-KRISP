@@ -1,5 +1,5 @@
 /*
- * $Id: krisp.c,v 1.2 2006-09-07 14:49:03 oops Exp $
+ * $Id: krisp.c,v 1.3 2006-09-15 09:35:38 oops Exp $
  */
 
 #include <stdio.h>
@@ -25,11 +25,13 @@ char * krisp_error_pl (void) {
 	return krerr;
 }
 
-KR_API * krisp_open_pl (char *datafile) {
+KR_API * krisp_open_pl (char *datafile, int city) {
 	KR_API *db;
 
 	struct stat f;
 	int r;
+
+	geocity = city;
 
 	r = stat (datafile, &f);
 
