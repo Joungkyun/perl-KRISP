@@ -1,5 +1,5 @@
 /*
- * $Id: krisp.c,v 1.3 2006-09-15 09:35:38 oops Exp $
+ * $Id: krisp.c,v 1.4 2006-11-29 10:19:39 oops Exp $
  */
 
 #include <stdio.h>
@@ -71,9 +71,9 @@ char * krisp_search_pl (KR_API *db, char *host) {
 		return NULL;
 	}
 
-	sprintf (ret, "%s:%s:%s:%s:%s:%s:%s:%s:%s:%s",
+	sprintf (ret, "%s:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s",
 			isp.key, isp.ip, isp.netmask, isp.network, isp.broadcast,
-			isp.icode, isp.iname, isp.gcode, isp.gname, isp.gcity);
+			isp.icode, isp.iname, isp.ccode, isp.cname, isp.city, isp.region);
 
 	return ret;
 }

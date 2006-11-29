@@ -7,7 +7,7 @@ require Exporter;
 require DynaLoader;
 
 @ISA = qw(Exporter DynaLoader);
-$VERSION = "1.1.1";
+$VERSION = "1.2.0";
 
 package KRISP;
 bootstrap KRISP;
@@ -60,7 +60,7 @@ sub krisp_search {
 	my $data, @d;
 	my $ret, @ars;
 
-	@ars = qw (key ip netmask network broadcast icode iname gcode gname gcity);
+	@ars = qw (key ip netmask network broadcast icode iname ccode cname city region);
 
 	$data = krisp_search_pl ($dbh, $host);
 
@@ -68,7 +68,7 @@ sub krisp_search {
 
 	@d = split /:/, $data;
 
-	for my $i ( 0 .. 9 ) {
+	for my $i ( 0 .. 10 ) {
 		$ret->{"$ars[$i]"} = $d[$i];
 	}
 
