@@ -1,14 +1,19 @@
-$Id: Changelog,v 1.4 2006-11-29 10:19:39 oops Exp $
+$Id: Changelog,v 1.5 2006-12-01 10:01:47 oops Exp $
 
 Perl KRISP Module Changelog
 
 
 *1.2.0
 --------------------------------------------------------------------------------
+Fri Dec  1 2006
+by JoungKyun.Kim <http://www.oops.org>
+	- release 1.2.0
+
 Wed Nov 29 2006
 by JoungKyun.Kim <http://www.oops.org>
 	- support over libkrisp 2.1.0
 	- support userdb support
+
 
 *1.1.1
 --------------------------------------------------------------------------------
@@ -16,6 +21,7 @@ Thu Sep 15 2006
 by JoungKyun.Kim <http://www.oops.org>
 	- 1.1.1 release
 	- add geoip city flag in new declear
+
 
 *1.1.0
 --------------------------------------------------------------------------------
