@@ -1,0 +1,76 @@
+#!/usr/bin/perl
+# $Id: bench.pl.in,v 1.1 2010-06-20 18:33:36 oops Exp $
+
+use strict;
+use KRISP;
+use Time::HiRes qw(gettimeofday);
+sub microtime{
+	my $asFloat = 1;
+	my $microtime;
+	if(@_){
+		$asFloat = shift;
+	}
+	(my $epochseconds, my $microseconds) = gettimeofday;
+	if($asFloat){
+		while(length("$microseconds") < 6){
+			$microseconds = "0$microseconds";
+		}
+		$microtime = "$epochseconds.$microseconds";
+	} else {
+		$microtime = "$epochseconds $microseconds";
+	}
+	return $microtime;
+}
+
+sub randomip {
+	my $range = 4294967295;
+	my $rd = int (rand ($range));
+
+	if ( $rd < 16777216 ) {
+		$rd += 16777216;
+	}
+
+	return $rd;
+}
+
+my $kr;
+my $host;
+
+if ( $ARGV[0] eq "-h" or @ARGV eq 0 ) {
+	printf stderr "Usage: perl bench.pl loop_number\n";
+	exit (1);
+}
+
+$kr = KRISP->new ();
+
+my $db = $kr->open ();
+exit (1) if ( $db eq undef );
+
+my $i = 0;
+my $lhost;
+my $info;
+my $err;
+
+my $t1 = microtime ();
+
+while ( $i < $ARGV[0] ) {
+	$lhost = randomip ();
+	$host = $kr->long2ip ($lhost);
+
+	$info = $kr->search ($db, $host, $err);
+	if ( $info eq undef ) {
+		printf "%s : %s\n", $host, $err;
+		next;
+	}
+
+	$info = undef;
+	$i++;
+}
+
+my $t2 = microtime ();
+
+printf "Execute Time: %.2f sec\n", $t2 - $t1;
+
+$kr->close ($db);
+
+exit (1);

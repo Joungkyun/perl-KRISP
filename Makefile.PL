@@ -1,5 +1,5 @@
 # File: Makefile.PL
-# $Id: Makefile.PL,v 1.1.1.1 2006-06-26 12:35:06 oops Exp $
+# $Id: Makefile.PL,v 1.2 2010-06-20 18:33:36 oops Exp $
 
 use ExtUtils::MakeMaker;
 
@@ -32,10 +32,6 @@ my $optimize;
 
 if ( $library =~ /sqlite3/ ) {
 	$define = "-DHAVE_LIBSQLITE3";
-}
-
-if ( $library =~ /GeoIP/ ) {
-	$define .= " -DHAVE_LIBGEOIP";
 }
 
 if ( $ostype == "Linux" ) {

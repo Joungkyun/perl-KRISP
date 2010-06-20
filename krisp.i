@@ -1,16 +1,47 @@
 %module "KRISP"
 %{
+#include <sys/types.h>
+#include <krisp.h>
 %}
 
-%include "cpointer.i"
-%pointer_functions (int, intp);
+typedef unsigned long int ulong;
 
-extern char dberr[1024];
+typedef struct {
+	char    err[1024];
+	char    ip[256];
+	char    icode[64];
+	char    iname[64];
+	char    cname[64];
+	char    ccode[4];
+	ulong   netmask;
+	ulong   start;
+	ulong   end;
+	bool    verbose;
+} KRNET_API;
 
-extern char * krisp_version_pl (void);
-extern char * krisp_uversion_pl (void);
-extern char * krisp_error_pl (void);
-extern int  * krisp_open_pl (char *, int);
-extern char * krisp_search_pl (int *, char *);
-extern void krisp_close_pl (int *);
+typedef struct {
+	char    err[1024];
+	char    ip[16];
+	char ** dummy;
+	char *  dummydata;
+	ulong   start;
+	ulong   end;
+	bool    verbose;
+	short   size;
+} KRNET_API_EX;
 
+extern char * version (void);
+extern char * uversion (void);
+extern KR_API * kopen (char *);
+extern KRNET_API * search (KR_API *, char *);
+extern KRNET_API_EX * search_ex (KR_API *, char *, char *);
+extern void free_search (KRNET_API *);
+extern void free_search_ex (KRNET_API_EX *);
+extern void kclose (KR_API *);
+
+extern ulong kip2long (char *);
+extern ulong knetmask (ulong, ulong);
+extern ulong knetwork (ulong, ulong);
+extern ulong kbroadcast (ulong, ulong);
+extern ulong kprefix2long (short);
+extern short klong2prefix (ulong);

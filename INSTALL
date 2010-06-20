@@ -1,4 +1,4 @@
-$Id: INSTALL,v 1.1 2006-06-26 12:40:57 oops Exp $
+$Id: INSTALL,v 1.2 2010-06-20 18:33:36 oops Exp $
 
 KRISP perl module installation
 
@@ -9,6 +9,10 @@ KRISP perl module installation
 
 for test:
 
-after installation and mv test.pl.in test.pl
-and execute ./test.pl
+after installation and rename test.pl.in to test.pl
+and execute ''perl ./test.pl''
 
+for bentch mark:
+
+after installation and rename bench.pl.in bench.pl
+and execute ''perl ./bench.pl -h''
