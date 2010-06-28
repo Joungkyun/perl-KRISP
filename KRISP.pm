@@ -10,7 +10,7 @@ package KRISP;
 @EXPORT = qw( );
 use strict;
 
-my $revsion = '$Id: KRISP.pm,v 1.7 2010-06-28 19:10:04 oops Exp $';
+my $revsion = '$Id: KRISP.pm,v 1.8 2010-06-28 19:37:17 oops Exp $';
 
 # ---------- BASE METHODS -------------
 
@@ -64,7 +64,7 @@ package KRISP;
 #*kprefix2long = *KRISPc::kprefix2long;
 #*klong2prefix = *KRISPc::klong2prefix;
 
-# -- joungkyun modificate $Id: KRISP.pm,v 1.7 2010-06-28 19:10:04 oops Exp $ --
+# -- joungkyun modificate $Id: KRISP.pm,v 1.8 2010-06-28 19:37:17 oops Exp $ --
 our $VERSION = '2.0.0';
 our $UVERSION = '002000000';
 
@@ -223,7 +223,7 @@ sub search {
 	#$v->{'ccode'} = $r->swig_ccode_get ();
 	#$v->{'cname'} = $r->swig_cname_get ();
 
-	#KRISPc::free_search ($r);
+	KRISPc::free_search ($r);
 
 	return $v;
 }
