@@ -10,7 +10,7 @@ package KRISP;
 @EXPORT = qw( );
 use strict;
 
-my $revsion = '$Id: KRISP.pm,v 1.6 2010-06-20 18:33:36 oops Exp $';
+my $revsion = '$Id: KRISP.pm,v 1.7 2010-06-28 19:10:04 oops Exp $';
 
 # ---------- BASE METHODS -------------
 
@@ -64,9 +64,9 @@ package KRISP;
 #*kprefix2long = *KRISPc::kprefix2long;
 #*klong2prefix = *KRISPc::klong2prefix;
 
-# -- joungkyun modificate $Id: KRISP.pm,v 1.6 2010-06-20 18:33:36 oops Exp $ --
-my $VERSION = '2.0.0';
-my $UVERSION = '002000000';
+# -- joungkyun modificate $Id: KRISP.pm,v 1.7 2010-06-28 19:10:04 oops Exp $ --
+our $VERSION = '2.0.0';
+our $UVERSION = '002000000';
 
 my @KRISP_SEARCH_EX_KEY = (
 	'ip', 'start', 'end', 'size', 'dummydata'
