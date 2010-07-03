@@ -1,0 +1,15 @@
+addon.pm.sample
+bench.pl.in
+Changelog
+COPYING
+init.sh
+INSTALL
+krisp.c
+krisp.i
+KRISP.pm
+krisp_wrap.c
+Makefile.PL
+MANIFEST			This list of files
+README
+tags
+test.pl.in
