@@ -1,5 +1,8 @@
 #!/usr/bin/perl
-# $Id: bench.pl.in,v 1.1 2010-06-20 18:33:36 oops Exp $
+# $Id: bench.pl.in,v 1.2 2010-07-03 19:41:11 oops Exp $
+
+BEGIN { unshift(@INC, "./blib/arch/auto/KRISP") }
+use lib './';
 
 use strict;
 use KRISP;
