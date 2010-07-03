@@ -1,11 +1,13 @@
-#!/usr/bin/perl
-# $Id: bench.pl.in,v 1.2 2010-07-03 19:41:11 oops Exp $
+#!/usr/bin/perl -W
+
+# $Id: bench.pl.in,v 1.1 2010-07-03 19:57:55 oops Exp $
 
 BEGIN { unshift(@INC, "./blib/arch/auto/KRISP") }
-use lib './';
-
+use lib './lib';
 use strict;
+
 use KRISP;
+use Data::Dumper;
 use Time::HiRes qw(gettimeofday);
 sub microtime{
 	my $asFloat = 1;
@@ -36,44 +38,44 @@ sub randomip {
 	return $rd;
 }
 
-my $kr;
+my $db;
 my $host;
+my $lhost;
 
-if ( $ARGV[0] eq "-h" or @ARGV eq 0 ) {
-	printf stderr "Usage: perl bench.pl loop_number\n";
+
+if ( @ARGV eq 0 or $ARGV[0] eq "-h" ) {
+	printf "Usage: perl bench.pl loop_number\n";
 	exit (1);
 }
 
-$kr = KRISP->new ();
-
-my $db = $kr->open ();
-exit (1) if ( $db eq undef );
-
-my $i = 0;
-my $lhost;
-my $info;
-my $err;
+$db = KRISP::open ();
+exit (1) if ( ! defined $db );
 
 my $t1 = microtime ();
 
+my $i = 0;
 while ( $i < $ARGV[0] ) {
 	$lhost = randomip ();
-	$host = $kr->long2ip ($lhost);
+	$host = KRISP::long2ip ($lhost);
 
-	$info = $kr->search ($db, $host, $err);
-	if ( $info eq undef ) {
-		printf "%s : %s\n", $host, $err;
-		next;
-	}
-
-	$info = undef;
+	#KRISP::search_ex ($db, $host, 'krisp');
+	KRISP::search ($db, $host);
 	$i++;
+	#printf "%d\n", $i;
+	#last if ($i eq 4);
 }
 
 my $t2 = microtime ();
 
 printf "Execute Time: %.2f sec\n", $t2 - $t1;
 
-$kr->close ($db);
+KRISP::close ($db);
 
-exit (1);
+exit (0);
+
+# Local variables:
+# tab-width: 4
+# c-basic-offset: 4
+# End:
+# vim600: noet sw=4 ts=4 fdm=marker
+# vim<600: noet sw=4 ts=4

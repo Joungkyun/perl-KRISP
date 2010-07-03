@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-# $Id: test.pl.in,v 1.5 2010-07-03 19:41:11 oops Exp $
+# $Id: test.pl.in,v 1.1 2010-07-03 19:57:55 oops Exp $
 
 BEGIN { unshift(@INC, "./blib/arch/auto/KRISP") }
 use lib './lib';
@@ -12,12 +12,12 @@ my $kr;
 my $db;
 my $isp;
 
-$kr = KRISP->new ();
+$kr = new KRISP;
 
-my $modv  = $kr->mod_version ();
-my $moduv = $kr->mod_uversion ();
-my $ver   = $kr->version ();
-my $uver  = $kr->uversion ();
+my $modv  = KRISP::mod_version ();
+my $moduv = KRISP::mod_uversion ();
+my $ver   = KRISP::version ();
+my $uver  = KRISP::uversion ();
 
 print <<"EOL";
 --- VERSION PRINTING ------------------------------------------------
@@ -27,6 +27,8 @@ LIBKRISP Version                  : $ver
 LIBKRISP Long Version             : $uver
 
 EOL
+
+$kr = new KRISP;
 
 my $ip = '168.126.63.1';
 my $long = $kr->ip2long ($ip);
@@ -38,7 +40,7 @@ my $mask = $kr->netmask ($start, $end);
 my $network = $kr->network ($start, $mask);
 my $broad = $kr->broadcast($start, $mask);
 my $prefix = $kr->mask2prefix ($mask);
-
+#
 print <<"EOL";
 --- IP Managenet ----------------------------------------------------
 GIVEN IP Address       : $ip
@@ -51,25 +53,27 @@ GIVEN IP Range         : $start <-> $end
 
 EOL
 
+##
+## search / search_ex API usage
+##
 #
-# search / search_ex API usage
-#
-
-#$db = $kr->open ('/usr/share/krisp/krisp.dat');
-$db = $kr->open ();
-exit (1) if ( $db eq undef );
-
-my $host = 'kornet.net';
-my $err;
-my $isp = $kr->search ($db, $host, $err);
-if ( $isp eq undef ) {
-	print $err . "\n";
+my $error;
+$db = $kr->open (undef, $error);
+#$db = KRISP::open (undef, $error);
+if ( ! defined $db ) {
+	printf "ERROR: %s\n", $error;
 	exit (1);
 }
 
-#foreach my $k ( $kr->search_key ) {
-#	printf "%10s => %s\n", $k, $isp->{$k};
-#}
+my $host = 'kornet.net';
+my $err;
+my $isp = $kr->search ($db, $host);
+#my $isp = KRISP::search ($db, $host);
+if ( $isp eq undef ) {
+	print $err . "\n";
+	$kr->close ($db);
+	exit (1);
+}
 
 $isp->{'prefix'} = $kr->mask2prefix ($isp->{'netmask'});
 
@@ -88,24 +92,31 @@ COUNTRY NAME : $isp->{'cname'}
 
 EOL
 
-
+#
 $isp = undef;
+#$host = '108.217.67.39';
 $isp = $kr->search_ex ($db, $host, 'krisp', $err);
 if ( $isp eq undef ) {
 	print $err . "\n";
+	$kr->close ($db);
 	exit (1);
 }
 
-#foreach my $k ( $kr->search_key_ex ) {
-#	next if ( $k eq 'dummy' );
-#	printf "%10s => %s\n", $k, $isp->{$k};
-#}
+##foreach my $k ( $kr->search_key_ex ) {
+##	next if ( $k eq 'dummy' );
+##	printf "%10s => %s\n", $k, $isp->{$k};
+##}
+
+$isp->{'prefix'} = $kr->mask2prefix ($isp->{'netmask'});
 
 print <<"EOL";
 --- Host Inforamtion (search_ex api) -----------------------------------
 Host         : $host
 IP           : $isp->{'ip'}
 RANGE        : $isp->{'start'} - $isp->{'end'}
+NETMASK      : $isp->{'netmask'} (/$isp->{'prefix'})
+NETWORK      : $isp->{'network'}
+BROADCAST    : $isp->{'broadcast'}
 EOL
 
 my $i;
@@ -114,5 +125,13 @@ for ( $i=0; $i<$isp->{'size'}; $i++ ) {
 }
 
 $kr->close ($db);
+undef $kr;
 
-exit (1);
+exit (0);
+
+# Local variables:
+# tab-width: 4
+# c-basic-offset: 4
+# End:
+# vim600: noet sw=4 ts=4 fdm=marker
+# vim<600: noet sw=4 ts=4

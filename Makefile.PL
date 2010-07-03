@@ -1,21 +1,21 @@
-# File: Makefile.PL
-# $Id: Makefile.PL,v 1.2 2010-06-20 18:33:36 oops Exp $
+# $Id: Makefile.PL,v 1.3 2010-07-03 19:57:55 oops Exp $
 
+use 5.008008;
 use ExtUtils::MakeMaker;
 
-my @ppd;
-
-my @SEARCHPATHS = ("/bin", "/sbin",
-				"/usr/bin", "/usr/sbin",
-				"/usr/local/bin", "/usr/local/sbin",
-				"/usr/local/krisp/bin", "/usr/local/libkrisp/bin");
+my @SEARCHPATHS = (
+	"/bin", "/sbin",
+	"/usr/bin", "/usr/sbin",
+	"/usr/local/bin", "/usr/local/sbin",
+	"/usr/local/krisp/bin", "/usr/local/libkrisp/bin"
+);
 
 my $krispconfig;
 
 foreach my $i (@SEARCHPATHS) {
 	if ( -f "$i/krisp-config" ) {
 		$krispconfig = "$i/krisp-config";
-		break;
+		last;
 	}
 }
 
@@ -24,15 +24,13 @@ if ( $krispconfig eq "" ) {
 	exit (1);
 }
 
-my $library = `$krispconfig --libs`;
+#my $library = `$krispconfig --libs`;
+my $library = '-lkrisp';
 my $cputype = `uname -m`;
 my $ostype  = `uname -s`;
-my $define  = "";
+#my $define  = `$krispconfig --defs`;
+my $define  = '';
 my $optimize;
-
-if ( $library =~ /sqlite3/ ) {
-	$define = "-DHAVE_LIBSQLITE3";
-}
 
 if ( $ostype == "Linux" ) {
 	$optimize = "3";
@@ -40,21 +38,30 @@ if ( $ostype == "Linux" ) {
 	$optimize = "2";
 }
 
-if ($] >= 5.00503) {
-	@ppd = (
-		AUTHOR    => 'JoungKyun Kim <admin @AT@ oops.org>',
-		ABSTRACT  => 'Korea ISP library perl module'
-	);
-}
 
+# See lib/ExtUtils/MakeMaker.pm for details of how to influence
+# the contents of the Makefile that is written.
 WriteMakefile(
-	NAME         => 'KRISP',
-	DISTNAME     => 'KRISP',
-	OPTIMIZE     => "-O$optimize -march=$cputype",
-	VERSION_FROM => 'KRISP.pm',
-	DEFINE       => "$define",
-	LIBS         => ["$library"],
-	OBJECT       => 'krisp.o krisp_wrap.o',
-	dist         => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
-	@ppd
+    NAME              => 'KRISP',
+	DISTNAME          => 'KRISP',
+	OPTIMIZE          => "-O$optimize -march=$cputype",
+    VERSION_FROM      => 'lib/KRISP.pm', # finds $VERSION
+    PREREQ_PM         => {}, # e.g., Module::Name => 1.1
+    ($] >= 5.005 ?     ## Add these new keywords supported since 5.005
+      (ABSTRACT_FROM  => 'lib/KRISP.pm', # retrieve abstract from module
+       AUTHOR         => 'JoungKyun.Kim <http://oops.org>') : ()),
+	TYPEMAPS          => ['map/typemap'],
+    LIBS              => ["$library"], # e.g., '-lm'
+    DEFINE            => "$define", # e.g., '-DHAVE_SOMETHING'
+    INC               => '-I.', # e.g., '-I. -I/usr/include/other'
+	dist              => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
+	# Un-comment this if you add C files to link with later:
+    # OBJECT            => '$(O_FILES)', # link all the C files too
 );
+
+# Local variables:
+# tab-width: 4
+# c-basic-offset: 4
+# End:
+# vim600: noet sw=4 ts=4 fdm=marker
+# vim<600: noet sw=4 ts=4
