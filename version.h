@@ -1,9 +1,9 @@
 /*
- * $Id: version.h,v 1.1 2010-07-03 19:57:55 oops Exp $
+ * $Id: version.h,v 1.2 2010-08-02 18:08:18 oops Exp $
  */
 
-#define MODVER "2.0.0"
-#define MODUVER "002000000"
+#define MODVER "2.0.1"
+#define MODUVER "002000001"
 
 /*
  * Local variables:
