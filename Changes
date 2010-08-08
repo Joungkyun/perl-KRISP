@@ -1,12 +1,13 @@
 Revision history for Perl extension KRISP.
 
-$Id: Changes,v 1.4 2010-08-08 16:51:18 oops Exp $
+$Id: Changes,v 1.5 2010-08-08 16:57:57 oops Exp $
 
 2.0.1
 	* Tue Aug  3 2010 JoungKyun.Kim <http://oops.org>
 	- changed path of libkrisp header files
 	- changed license from GPLv2 to LGPL which current and all
 	  old versions.
+	- linked libkrisp version at least 3.0.2
 
 
 2.0.0

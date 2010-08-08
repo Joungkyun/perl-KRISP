@@ -1,5 +1,5 @@
 /*
- * $Id: KRISP.xs,v 1.1 2010-07-03 19:57:55 oops Exp $
+ * $Id: KRISP.xs,v 1.2 2010-08-08 16:57:57 oops Exp $
  *
  * Local variables:
  * tab-width: 4
@@ -83,7 +83,7 @@ ip2long (...)
 		if ( chkSvRV (items, 1, 1, ST(0), "ip2long (addr)") )
 			argno++;
 		addr = (char *) SvPV_nolen (ST(argno));
-		RETVAL = kr_ip2long (addr);
+		RETVAL = ip2long (addr);
 
 	OUTPUT:
 		RETVAL
@@ -100,7 +100,7 @@ long2ip (...)
 		if ( chkSvRV (items, 1, 1, ST(0), "long2ip (long_ip)") )
 			argno++;
 		laddr = (ulong) SvUV (ST(argno));
-		kr_long2ip_r (laddr, sip);
+		long2ip_r (laddr, sip);
 		RETVAL = sip;
 
 	OUTPUT:
@@ -122,9 +122,9 @@ netmask (...)
 		start = (char *) SvPV_nolen (ST(argno));
 		end   = (char *) SvPV_nolen (ST(argno + 1));
 
-		lstart = kr_ip2long (start);
-		lend   = kr_ip2long (end);
-		kr_long2ip_r (kr_netmask (lstart, lend), mask);
+		lstart = ip2long (start);
+		lend   = ip2long (end);
+		long2ip_r (guess_netmask (lstart, lend), mask);
 		RETVAL = mask;
 
 	OUTPUT:
@@ -142,8 +142,8 @@ mask2prefix (...)
 		if ( chkSvRV (items, 1, 1, ST(0), "mask2prefix (mask)") )
 			argno++;
 		mask = (char *) SvPV_nolen (ST(argno));
-		lmask = kr_ip2long (mask);
-		RETVAL = kr_long2prefix (lmask);
+		lmask = ip2long (mask);
+		RETVAL = long2prefix (lmask);
 
 	OUTPUT:
 		RETVAL
@@ -159,7 +159,7 @@ prefix2mask (...)
 		if ( chkSvRV (items, 1, 1, ST(0), "prefix2mask (prefix)") )
 			argno++;
 		prefix = (short) SvIV (ST(argno));
-		kr_long2ip_r (kr_prefix2long (prefix), mask);
+		long2ip_r (prefix2long (prefix), mask);
 		RETVAL = mask;
 
 	OUTPUT:
@@ -181,9 +181,9 @@ network (...)
 		ip = (char *) SvPV (ST(argno), PL_na);
 		mask = (char *) SvPV (ST(argno + 1), PL_na);
 
-		lip = kr_ip2long (ip);
-		lmask = kr_ip2long (mask);
-		kr_long2ip_r (kr_network (lip, lmask), net);
+		lip = ip2long (ip);
+		lmask = ip2long (mask);
+		long2ip_r (network (lip, lmask), net);
 		RETVAL = net;
 
 	OUTPUT:
@@ -205,9 +205,9 @@ broadcast (...)
 		ip = (char *) SvPV (ST(argno), PL_na);
 		mask = (char *) SvPV (ST(argno + 1), PL_na);
 
-		lip = kr_ip2long (ip);
-		lmask = kr_ip2long (mask);
-		kr_long2ip_r (kr_broadcast (lip, lmask), net);
+		lip = ip2long (ip);
+		lmask = ip2long (mask);
+		long2ip_r (broadcast (lip, lmask), net);
 		RETVAL = net;
 
 	OUTPUT:
@@ -248,8 +248,8 @@ search (...)
 		KRNET_API	isp;
 		HV *		hv;
 		char		ip_t[16];
-		ulong		network;
-		ulong		broadcast;
+		ulong		net;
+		ulong		broad;
 		short		argno = 0;
 
 	PPCODE:
@@ -272,17 +272,17 @@ search (...)
 			XSRETURN_UNDEF;
 		}
 
-		network = kr_network (isp.start, isp.netmask);
-		broadcast = kr_broadcast (isp.start, isp.netmask);
+		net   = network (isp.start, isp.netmask);
+		broad = broadcast (isp.start, isp.netmask);
 
 		hv = newHV ();
 
 		hv_store (hv, "ip", 2, newSVpv (isp.ip, 0), 0);
-		hv_store (hv, "start", 5, newSVpv (kr_long2ip_r (isp.start, ip_t), 0), 0);
-		hv_store (hv, "end", 3, newSVpv (kr_long2ip_r (isp.end, ip_t), 0), 0);
-		hv_store (hv, "netmask", 7, newSVpv (kr_long2ip_r (isp.netmask, ip_t), 0), 0);
-		hv_store (hv, "network", 7, newSVpv (kr_long2ip_r (network, ip_t), 0), 0);
-		hv_store (hv, "broadcast", 9, newSVpv (kr_long2ip_r (broadcast, ip_t), 0), 0);
+		hv_store (hv, "start", 5, newSVpv (long2ip_r (isp.start, ip_t), 0), 0);
+		hv_store (hv, "end", 3, newSVpv (long2ip_r (isp.end, ip_t), 0), 0);
+		hv_store (hv, "netmask", 7, newSVpv (long2ip_r (isp.netmask, ip_t), 0), 0);
+		hv_store (hv, "network", 7, newSVpv (long2ip_r (net, ip_t), 0), 0);
+		hv_store (hv, "broadcast", 9, newSVpv (long2ip_r (broad, ip_t), 0), 0);
 		hv_store (hv, "icode", 5, newSVpv (isp.icode, 0), 0);
 		hv_store (hv, "iname", 5, newSVpv (isp.iname, 0), 0);
 		hv_store (hv, "ccode", 5, newSVpv (isp.ccode, 0), 0);
@@ -301,8 +301,8 @@ search_ex (...)
 		AV *			av;
 		char			ip_t[16];
 		ulong			netmask;
-		ulong			network;
-		ulong			broadcast;
+		ulong			net;
+		ulong			broad;
 		short			argno = 0;
 		char **			dummy;
 
@@ -337,18 +337,18 @@ search_ex (...)
 			XSRETURN_UNDEF;
 		}
 
-		netmask = kr_netmask (isp->start, isp->end);
-		network = kr_network (isp->start, netmask);
-		broadcast = kr_broadcast (isp->start, netmask);
+		netmask = guess_netmask (isp->start, isp->end);
+		net     = network (isp->start, netmask);
+		broad   = broadcast (isp->start, netmask);
 
 		hv = newHV ();
 
 		hv_store (hv, "ip", 2, newSVpv (isp->ip, 0), 0);
-		hv_store (hv, "start", 5, newSVpv (kr_long2ip_r (isp->start, ip_t), 0), 0);
-		hv_store (hv, "end", 3, newSVpv (kr_long2ip_r (isp->end, ip_t), 0), 0);
-		hv_store (hv, "netmask", 7, newSVpv (kr_long2ip_r (netmask, ip_t), 0), 0);
-		hv_store (hv, "network", 7, newSVpv (kr_long2ip_r (network, ip_t), 0), 0);
-		hv_store (hv, "broadcast", 9, newSVpv (kr_long2ip_r (broadcast, ip_t), 0), 0);
+		hv_store (hv, "start", 5, newSVpv (long2ip_r (isp->start, ip_t), 0), 0);
+		hv_store (hv, "end", 3, newSVpv (long2ip_r (isp->end, ip_t), 0), 0);
+		hv_store (hv, "netmask", 7, newSVpv (long2ip_r (netmask, ip_t), 0), 0);
+		hv_store (hv, "network", 7, newSVpv (long2ip_r (net, ip_t), 0), 0);
+		hv_store (hv, "broadcast", 9, newSVpv (long2ip_r (broad, ip_t), 0), 0);
 
 		av = newAV ();
 
