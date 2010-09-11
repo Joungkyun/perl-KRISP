@@ -1,6 +1,6 @@
 #!/usr/bin/perl -W
 
-# $Id: bench.pl.in,v 1.1 2010-07-03 19:57:55 oops Exp $
+# $Id: bench.pl.in,v 1.2 2010-09-11 09:46:35 oops Exp $
 
 BEGIN { unshift(@INC, "./blib/arch/auto/KRISP") }
 use lib './lib';
@@ -50,6 +50,8 @@ if ( @ARGV eq 0 or $ARGV[0] eq "-h" ) {
 
 $db = KRISP::open ();
 exit (1) if ( ! defined $db );
+
+KRISP::set_mtime_interval ($db, 0);
 
 my $t1 = microtime ();
 

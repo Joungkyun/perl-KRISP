@@ -1,4 +1,4 @@
-# $Id: 02-search.t,v 1.1 2010-07-03 19:57:55 oops Exp $
+# $Id: 02-search.t,v 1.2 2010-09-11 09:46:35 oops Exp $
 
 BEGIN { unshift(@INC, "./blib/arch/auto/KRISP") }
 use lib './lib';
@@ -14,6 +14,8 @@ my $err = '';
 my $db;
 $db = $kr->open ('', $err);
 ok (defined $db, 'connect the krisp database');
+
+$kr->set_mtime_interval ($db, 0);
 
 my $isp = $kr->search ($db, '192.168.1.100', $err);
 ok (defined $isp, 'test search method');
