@@ -1,5 +1,5 @@
 /*
- * $Id: KRISP.xs,v 1.2 2010-08-08 16:57:57 oops Exp $
+ * $Id: KRISP.xs,v 1.3 2010-09-11 08:27:10 oops Exp $
  *
  * Local variables:
  * tab-width: 4
@@ -386,6 +386,6 @@ close (...)
 		} else
 			Perl_croak (aTHX_ "KRISP::close : db is not of type KR_APIPtr");
 
-		kr_close (db);
+		kr_close (&db);
 
 
