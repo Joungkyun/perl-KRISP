@@ -19,8 +19,8 @@ our %EXPORT_TAGS = ( 'all' => [ qw( ) ] );
 our @EXPORT_OK = ( @{ $EXPORT_TAGS{'all'} } );
 our @EXPORT = qw( );
 
-our $VERSION = '2.0.1';
-my $revision = '$Id: KRISP.pm,v 1.3 2010-08-02 18:08:18 oops Exp $';
+our $VERSION = '2.1.0';
+my $revision = '$Id: KRISP.pm,v 1.4 2010-09-11 08:19:47 oops Exp $';
 
 require XSLoader;
 XSLoader::load('KRISP', $VERSION);
