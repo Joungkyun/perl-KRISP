@@ -1,5 +1,5 @@
 /*
- * $Id: KRISP.xs,v 1.4 2010-09-11 09:08:41 oops Exp $
+ * $Id: KRISP.xs,v 1.5 2010-09-11 09:29:06 oops Exp $
  *
  * Local variables:
  * tab-width: 4
@@ -260,7 +260,7 @@ search (...)
 			IV tmp = SvIV ((SV *) SvRV (ST(argno)));
 			db = INT2PTR (KR_API *, tmp);
 		} else
-			Perl_croak(aTHX_ "KRISP::Search : db is not of type KR_APIPtr");
+			Perl_croak(aTHX_ "KRISP::Search : first argument is not of type KR_APIPtr");
 
 		host = (char *) SvPV_nolen (ST(argno + 1));
 
@@ -314,7 +314,7 @@ search_ex (...)
 			IV tmp = SvIV ((SV *) SvRV (ST(argno)));
 			db = INT2PTR (KR_API *, tmp);
 		} else
-			Perl_croak(aTHX_ "KRISP::search_ex : db is not of type KR_APIPtr");
+			Perl_croak(aTHX_ "KRISP::search_ex : first argument is not of type KR_APIPtr");
 
 		host = (char *) SvPV_nolen (ST(argno + 1));
 		table = (char *) SvPV_nolen (ST(argno + 2));
@@ -384,7 +384,7 @@ close (...)
 			IV tmp = SvIV ((SV *) SvRV (ST(argno)));
 			db = INT2PTR (KR_API *,tmp);
 		} else
-			Perl_croak (aTHX_ "KRISP::close : db is not of type KR_APIPtr");
+			Perl_croak (aTHX_ "KRISP::close : first argument is not of type KR_APIPtr");
 
 		kr_close (&db);
 
@@ -403,11 +403,32 @@ set_debug (...)
 			IV tmp = SvIV ((SV *) SvRV (ST(argno)));
 			db = INT2PTR (KR_API *,tmp);
 		} else
-			Perl_croak (aTHX_ "KRISP::close : db is not of type KR_APIPtr");
+			Perl_croak (aTHX_ "KRISP::set_debug : first argument is not of type KR_APIPtr");
 
 		if ( items == (argno + 2) )
 			set = (short) SvIV (ST(argno + 1));
 
 		db->verbose = set;
+
+void
+set_mtime_interval (...)
+	PREINIT:
+		KR_API *	db;
+		time_t		sec = 0;
+		short		argno = 0;
+
+	PPCODE:
+		if ( chkSvRV (items, 2, 2, ST(0), "set_mtime_interval (db, sec)") )
+			argno++;
+
+		if ( sv_derived_from (ST(argno), "KR_APIPtr") ) {
+			IV tmp = SvIV ((SV *) SvRV (ST(argno)));
+			db = INT2PTR (KR_API *,tmp);
+		} else
+			Perl_croak (aTHX_ "KRISP::set_mtime_interval : first argument is not of type KR_APIPtr");
+
+		sec = (short) SvIV (ST(argno + 1));
+
+		db->db_time_stamp_interval = sec;
 
 

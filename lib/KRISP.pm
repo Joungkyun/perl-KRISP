@@ -23,7 +23,7 @@ our @EXPORT_OK = ( @{ $EXPORT_TAGS{'all'} } );
 our @EXPORT = qw( );
 
 our $VERSION = '2.1.0';
-my $revision = '$Id: KRISP.pm,v 1.6 2010-09-11 09:08:41 oops Exp $';
+my $revision = '$Id: KRISP.pm,v 1.7 2010-09-11 09:29:06 oops Exp $';
 
 require XSLoader;
 XSLoader::load('KRISP', $VERSION);
@@ -297,6 +297,28 @@ method is printed debug messages to standard out. If you want to
 no debug messages, set KRISP::false or 0.
 
 If this method has not been called, Default value will be meaningless.
+
+=back
+
+=head2 $kr->set_mtime_interval ($open_handle, $seconds)
+
+From libkrisp 3.1.0, libkrisp is periodically to detect database
+changes. If libkrisp detects database changes, internally to close
+database and will open database again.
+
+libkrip checks change of database per 3600 seconds.
+This method is enabled to change check-peroid of database.
+
+=over 4
+
+=item open_handle
+
+Return value of open method.
+
+=item seconds
+
+Peroid of database check. If you set 0, libkrisp don't check changes
+of database.
 
 =back
 
