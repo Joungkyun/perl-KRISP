@@ -11,6 +11,9 @@ use 5.008008;
 use strict;
 use warnings;
 
+use constant false => 0;
+use constant true  => 1;
+
 require Exporter;
 
 our @ISA = qw(Exporter);
@@ -20,7 +23,7 @@ our @EXPORT_OK = ( @{ $EXPORT_TAGS{'all'} } );
 our @EXPORT = qw( );
 
 our $VERSION = '2.1.0';
-my $revision = '$Id: KRISP.pm,v 1.5 2010-09-11 09:05:50 oops Exp $';
+my $revision = '$Id: KRISP.pm,v 1.6 2010-09-11 09:08:41 oops Exp $';
 
 require XSLoader;
 XSLoader::load('KRISP', $VERSION);
@@ -53,8 +56,9 @@ KRISP - Perl extension for libkrisp
     # search isp/nation information
     my $err;
     my $db = $kr->open ('', $err);
+    $kr->set_debug ($db, KRISP::true);
     my $isp = $kr->search ($db, 'some.domain.name', $err);
-    my $isp = $kr->search_ex ($db, 'some.domain.name', 'krisp', $err);
+    my $isp_ex = $kr->search_ex ($db, 'some.domain.name', 'krisp', $err);
     $kr->close ($db);
 
 =head1 DESCRIPTION
@@ -273,6 +277,26 @@ Closes krisp database handle.
 =item open_handle
 
 Return value of open method.
+
+=back
+
+=head2 $kr->set_debug ($open_handle, $boolean)
+
+Print libkrisp debug messages to standard out.
+
+=over 4
+
+=item open_handle
+
+Return value of open method.
+
+=item boolean (optional)
+
+Default value is KRISP::true (1). Set KRISP::true or 1, search
+method is printed debug messages to standard out. If you want to
+no debug messages, set KRISP::false or 0.
+
+If this method has not been called, Default value will be meaningless.
 
 =back
 

@@ -1,5 +1,5 @@
 /*
- * $Id: KRISP.xs,v 1.3 2010-09-11 08:27:10 oops Exp $
+ * $Id: KRISP.xs,v 1.4 2010-09-11 09:08:41 oops Exp $
  *
  * Local variables:
  * tab-width: 4
@@ -265,7 +265,7 @@ search (...)
 		host = (char *) SvPV_nolen (ST(argno + 1));
 
 		SAFECPY_256 (isp.ip, host);
-		isp.verbose = false;
+		isp.verbose = db->verbose;
 		if ( kr_search (&isp, db) != 0 ) {
 			if ( items == (3 + argno) )
 				sv_setpv (ST(argno + 2), (char *) isp.err);
@@ -330,7 +330,7 @@ search_ex (...)
 
 		SAFECPY_256 (isp->ip, host);
 		db->table = table;
-		isp->verbose = false;
+		isp->verbose = db->verbose;
 		if ( kr_search_ex (isp, db) != 0 ) {
 			if ( items == (3 + argno) )
 				sv_setpv (ST(argno + 3), (char *) isp->err);
@@ -387,5 +387,27 @@ close (...)
 			Perl_croak (aTHX_ "KRISP::close : db is not of type KR_APIPtr");
 
 		kr_close (&db);
+
+void
+set_debug (...)
+	PREINIT:
+		KR_API *	db;
+		bool		set = true;
+		short		argno = 0;
+
+	PPCODE:
+		if ( chkSvRV (items, 1, 2, ST(0), "set_debug (db[, boolean = true])") )
+			argno++;
+
+		if ( sv_derived_from (ST(argno), "KR_APIPtr") ) {
+			IV tmp = SvIV ((SV *) SvRV (ST(argno)));
+			db = INT2PTR (KR_API *,tmp);
+		} else
+			Perl_croak (aTHX_ "KRISP::close : db is not of type KR_APIPtr");
+
+		if ( items == (argno + 2) )
+			set = (short) SvIV (ST(argno + 1));
+
+		db->verbose = set;
 
 

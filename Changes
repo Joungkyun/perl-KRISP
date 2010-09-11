@@ -1,6 +1,12 @@
 Revision history for Perl extension KRISP.
 
-$Id: Changes,v 1.6 2010-08-08 16:58:41 oops Exp $
+$Id: Changes,v 1.7 2010-09-11 09:08:41 oops Exp $
+
+2.1.0
+	* Sat Sep 11 2010 JoungKyun.Kim <http://oops.org>
+	- linked libkrisp version at least 3.1.0
+	- add set_debug method
+
 
 2.0.1
 	* Mon Aug  9 2010 JoungKyun.Kim <http://oops.org>
