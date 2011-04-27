@@ -1,5 +1,5 @@
 /*
- * $Id: KRISP.xs,v 1.5 2010-09-11 09:29:06 oops Exp $
+ * $Id: KRISP.xs,v 1.2 2010-08-08 16:57:57 oops Exp $
  *
  * Local variables:
  * tab-width: 4
@@ -260,12 +260,12 @@ search (...)
 			IV tmp = SvIV ((SV *) SvRV (ST(argno)));
 			db = INT2PTR (KR_API *, tmp);
 		} else
-			Perl_croak(aTHX_ "KRISP::Search : first argument is not of type KR_APIPtr");
+			Perl_croak(aTHX_ "KRISP::Search : db is not of type KR_APIPtr");
 
 		host = (char *) SvPV_nolen (ST(argno + 1));
 
 		SAFECPY_256 (isp.ip, host);
-		isp.verbose = db->verbose;
+		isp.verbose = false;
 		if ( kr_search (&isp, db) != 0 ) {
 			if ( items == (3 + argno) )
 				sv_setpv (ST(argno + 2), (char *) isp.err);
@@ -314,7 +314,7 @@ search_ex (...)
 			IV tmp = SvIV ((SV *) SvRV (ST(argno)));
 			db = INT2PTR (KR_API *, tmp);
 		} else
-			Perl_croak(aTHX_ "KRISP::search_ex : first argument is not of type KR_APIPtr");
+			Perl_croak(aTHX_ "KRISP::search_ex : db is not of type KR_APIPtr");
 
 		host = (char *) SvPV_nolen (ST(argno + 1));
 		table = (char *) SvPV_nolen (ST(argno + 2));
@@ -330,7 +330,7 @@ search_ex (...)
 
 		SAFECPY_256 (isp->ip, host);
 		db->table = table;
-		isp->verbose = db->verbose;
+		isp->verbose = false;
 		if ( kr_search_ex (isp, db) != 0 ) {
 			if ( items == (3 + argno) )
 				sv_setpv (ST(argno + 3), (char *) isp->err);
@@ -384,51 +384,8 @@ close (...)
 			IV tmp = SvIV ((SV *) SvRV (ST(argno)));
 			db = INT2PTR (KR_API *,tmp);
 		} else
-			Perl_croak (aTHX_ "KRISP::close : first argument is not of type KR_APIPtr");
+			Perl_croak (aTHX_ "KRISP::close : db is not of type KR_APIPtr");
 
-		kr_close (&db);
-
-void
-set_debug (...)
-	PREINIT:
-		KR_API *	db;
-		bool		set = true;
-		short		argno = 0;
-
-	PPCODE:
-		if ( chkSvRV (items, 1, 2, ST(0), "set_debug (db[, boolean = true])") )
-			argno++;
-
-		if ( sv_derived_from (ST(argno), "KR_APIPtr") ) {
-			IV tmp = SvIV ((SV *) SvRV (ST(argno)));
-			db = INT2PTR (KR_API *,tmp);
-		} else
-			Perl_croak (aTHX_ "KRISP::set_debug : first argument is not of type KR_APIPtr");
-
-		if ( items == (argno + 2) )
-			set = (short) SvIV (ST(argno + 1));
-
-		db->verbose = set;
-
-void
-set_mtime_interval (...)
-	PREINIT:
-		KR_API *	db;
-		time_t		sec = 0;
-		short		argno = 0;
-
-	PPCODE:
-		if ( chkSvRV (items, 2, 2, ST(0), "set_mtime_interval (db, sec)") )
-			argno++;
-
-		if ( sv_derived_from (ST(argno), "KR_APIPtr") ) {
-			IV tmp = SvIV ((SV *) SvRV (ST(argno)));
-			db = INT2PTR (KR_API *,tmp);
-		} else
-			Perl_croak (aTHX_ "KRISP::set_mtime_interval : first argument is not of type KR_APIPtr");
-
-		sec = (short) SvIV (ST(argno + 1));
-
-		db->db_time_stamp_interval = sec;
+		kr_close (db);
 
 
