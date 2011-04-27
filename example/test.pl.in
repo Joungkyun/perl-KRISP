@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-# $Id: test.pl.in,v 1.3 2010-09-11 09:46:35 oops Exp $
+# $Id: test.pl.in,v 1.1 2010-07-03 19:57:55 oops Exp $
 
 BEGIN { unshift(@INC, "./blib/arch/auto/KRISP") }
 use lib './lib';
@@ -64,20 +64,6 @@ if ( ! defined $db ) {
 	printf "ERROR: %s\n", $error;
 	exit (1);
 }
-$kr->set_mtime_interval ($db, 0);
-
-##
-## print Debug messages.
-## set_debug method is must called after open method.
-##
-# Print
-#$kr->set_debug ($db);
-#$kr->set_debug ($db, $kr->true);
-#$kr->set_debug ($db, KRISP::true);
-#
-# Don't Print
-#$kr->set_debug ($db, $kr->false);
-#$kr->set_debug ($db, KRISP::false);
 
 my $host = 'kornet.net';
 my $err;

@@ -1,4 +1,4 @@
-# $Id: Makefile.PL,v 1.5 2010-08-08 16:57:57 oops Exp $
+# $Id: Makefile.PL,v 1.3 2010-07-03 19:57:55 oops Exp $
 
 use 5.008008;
 use ExtUtils::MakeMaker;
@@ -24,12 +24,12 @@ if ( $krispconfig eq "" ) {
 	exit (1);
 }
 
-my $library = `$krispconfig --libs`;
-#my $library = '-lkrisp';
+#my $library = `$krispconfig --libs`;
+my $library = '-lkrisp';
 my $cputype = `uname -m`;
 my $ostype  = `uname -s`;
-my $define  = `$krispconfig --defs`;
-#my $define  = '';
+#my $define  = `$krispconfig --defs`;
+my $define  = '';
 my $optimize;
 
 if ( $ostype == "Linux" ) {
