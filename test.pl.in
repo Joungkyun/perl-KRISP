@@ -1,0 +1,45 @@
+#!/usr/bin/perl
+
+use strict;
+use KRISP;
+
+my $kr;
+my $c;
+my $isp;
+my $host = 'kldp.org';
+my @ispkey = qw (key ip netmask network broadcast icode iname ccode cname city region);
+
+$host = $ARGV[0] if ( $ARGV[0] );
+
+# argumnet set 1, search geoip city database if enabled..
+# argument set 0, don't search geoip city datbase whether if enabled..
+#
+$kr = KRISP->new (1);
+
+printf "LIBKRISP Version: %s\nLIBKRISP uVersion: %s\n",
+		$kr->krisp_version (), $kr->krisp_uversion ();
+
+$c = $kr->krisp_open ("/usr/share/krisp/krisp.dat");
+
+if ( ! $c ) {
+	print $kr->krisp_error () . "\n";
+	exit (1);
+}
+
+$isp = $kr->krisp_search ($c, $host);
+my $err = $kr->krisp_error ();
+
+if ( ! $isp || $err ) {
+	print $kr->krisp_error () . "\n";
+	$kr->krisp_close ($c);
+	exit (1);
+}
+
+print "\n";
+foreach my $v ( @ispkey ) {
+	printf "-- %-10s: %s\n", $v, $isp->{$v};
+}
+
+$kr->krisp_close ($c);
+
+1;
