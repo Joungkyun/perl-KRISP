@@ -2,6 +2,11 @@ Revision history for Perl extension KRISP.
 
 $Id: Changes,v 1.8 2010-09-11 09:29:06 oops Exp $
 
+2.1.1
+	* Wed Apr 27 2011 JoungKyun.Kim <http://oops.org>
+	- 2.1.1 tree start
+
+
 2.1.0
 	* Sat Sep 11 2010 JoungKyun.Kim <http://oops.org>
 	- linked libkrisp version at least 3.1.0
