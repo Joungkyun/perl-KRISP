@@ -1,4 +1,4 @@
-# $Id: 02-search.t,v 1.2 2010-09-11 09:46:35 oops Exp $
+# $Id$
 
 BEGIN { unshift(@INC, "./blib/arch/auto/KRISP") }
 use lib './lib';

@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-# $Id: test.pl.in,v 1.3 2010-09-11 09:46:35 oops Exp $
+# $Id$
 
 BEGIN { unshift(@INC, "./blib/arch/auto/KRISP") }
 use lib './lib';

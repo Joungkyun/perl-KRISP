@@ -1,5 +1,5 @@
 /*
- * $Id: version.h,v 1.3 2010-09-11 08:19:47 oops Exp $
+ * $Id$
  */
 
 #define MODVER "2.1.1"

@@ -1,5 +1,5 @@
 /*
- * $Id: KRISP.xs,v 1.5 2010-09-11 09:29:06 oops Exp $
+ * $Id$
  *
  * Local variables:
  * tab-width: 4

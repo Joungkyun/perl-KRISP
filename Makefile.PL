@@ -1,4 +1,4 @@
-# $Id: Makefile.PL,v 1.5 2010-08-08 16:57:57 oops Exp $
+# $Id$
 
 use 5.008008;
 use ExtUtils::MakeMaker;

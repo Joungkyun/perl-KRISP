@@ -1,4 +1,4 @@
-# $Id: 01-convert.t,v 1.1 2010-07-03 19:57:55 oops Exp $
+# $Id$
 
 BEGIN { unshift(@INC, "./blib/arch/auto/KRISP") }
 use lib './lib';
