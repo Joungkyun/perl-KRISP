@@ -73,7 +73,7 @@ uversion (...)
 	OUTPUT:
 		RETVAL
 
-ulong
+unsigned int
 ip2long (...)
 	PREINIT:
 		char *	addr;

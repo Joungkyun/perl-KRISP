@@ -3,6 +3,9 @@ Revision history for Perl extension KRISP.
 $Id$
 
 2.1.1
+	* Tue Jan 24 2012 JoungKyun.Kim <http://oops.org>
+	- fixed underflow on ip2long on 64bit machine
+
 	* Wed Apr 27 2011 JoungKyun.Kim <http://oops.org>
 	- 2.1.1 tree start
 
