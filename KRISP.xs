@@ -278,11 +278,16 @@ search (...)
 		hv = newHV ();
 
 		hv_store (hv, "ip", 2, newSVpv (isp.ip, 0), 0);
-		hv_store (hv, "start", 5, newSVpv (long2ip_r (isp.start, ip_t), 0), 0);
-		hv_store (hv, "end", 3, newSVpv (long2ip_r (isp.end, ip_t), 0), 0);
-		hv_store (hv, "netmask", 7, newSVpv (long2ip_r (isp.netmask, ip_t), 0), 0);
-		hv_store (hv, "network", 7, newSVpv (long2ip_r (net, ip_t), 0), 0);
-		hv_store (hv, "broadcast", 9, newSVpv (long2ip_r (broad, ip_t), 0), 0);
+		long2ip_r (isp.start, ip_t);
+		hv_store (hv, "start", 5, newSVpv (ip_t, 0), 0);
+		long2ip_r (isp.end, ip_t);
+		hv_store (hv, "end", 3, newSVpv (ip_t, 0), 0);
+		long2ip_r (isp.netmask, ip_t);
+		hv_store (hv, "netmask", 7, newSVpv (ip_t, 0), 0);
+		long2ip_r (net, ip_t);
+		hv_store (hv, "network", 7, newSVpv (ip_t, 0), 0);
+		long2ip_r (broad, ip_t);
+		hv_store (hv, "broadcast", 9, newSVpv (ip_t, 0), 0);
 		hv_store (hv, "icode", 5, newSVpv (isp.icode, 0), 0);
 		hv_store (hv, "iname", 5, newSVpv (isp.iname, 0), 0);
 		hv_store (hv, "ccode", 5, newSVpv (isp.ccode, 0), 0);
@@ -344,11 +349,16 @@ search_ex (...)
 		hv = newHV ();
 
 		hv_store (hv, "ip", 2, newSVpv (isp->ip, 0), 0);
-		hv_store (hv, "start", 5, newSVpv (long2ip_r (isp->start, ip_t), 0), 0);
-		hv_store (hv, "end", 3, newSVpv (long2ip_r (isp->end, ip_t), 0), 0);
-		hv_store (hv, "netmask", 7, newSVpv (long2ip_r (netmask, ip_t), 0), 0);
-		hv_store (hv, "network", 7, newSVpv (long2ip_r (net, ip_t), 0), 0);
-		hv_store (hv, "broadcast", 9, newSVpv (long2ip_r (broad, ip_t), 0), 0);
+		long2ip_r (isp->start, ip_t);
+		hv_store (hv, "start", 5, newSVpv (ip_t, 0), 0);
+		long2ip_r (isp->end, ip_t);
+		hv_store (hv, "end", 3, newSVpv (ip_t, 0), 0);
+		long2ip_r (netmask, ip_t);
+		hv_store (hv, "netmask", 7, newSVpv (ip_t, 0), 0);
+		long2ip_r (net, ip_t);
+		hv_store (hv, "network", 7, newSVpv (ip_t, 0), 0);
+		long2ip_r (broad, ip_t);
+		hv_store (hv, "broadcast", 9, newSVpv (ip_t, 0), 0);
 
 		av = newAV ();
 
