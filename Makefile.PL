@@ -1,5 +1,3 @@
-# $Id$
-
 use 5.008008;
 use ExtUtils::MakeMaker;
 
@@ -59,7 +57,7 @@ WriteMakefile(
     PREREQ_PM         => {}, # e.g., Module::Name => 1.1
     ($] >= 5.005 ?     ## Add these new keywords supported since 5.005
       (ABSTRACT_FROM  => 'lib/KRISP.pm', # retrieve abstract from module
-       AUTHOR         => 'JoungKyun.Kim <http://oops.org>') : ()),
+       AUTHOR         => 'JoungKyun.Kim <https://joungkyun.github.com>') : ()),
 	TYPEMAPS          => ['map/typemap'],
     LIBS              => ["$library"], # e.g., '-lm'
     DEFINE            => "$define", # e.g., '-DHAVE_SOMETHING'

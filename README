@@ -1,7 +1,6 @@
 KRISP version 2.1.0
 ===================
 
-$Id$
 
 The README is used to introduce the module and provide instructions on
 how to install the module, any machine dependencies it may have (for
@@ -44,11 +43,11 @@ This module requires these libraries:
 
 COPYRIGHT AND LICENCE
 
-Copyright (C) 2010 by JoungKyun.Kim <http://oops.org>
+Copyright (C) 2016 by JoungKyun.Kim <http://oops.org>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU LESSER GENERAL PUBLIC LICENSE as published
-by the Free Software Foundation; either version 2 of the License.
+by the Free Software Foundation; either version 2.1 of the License.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
