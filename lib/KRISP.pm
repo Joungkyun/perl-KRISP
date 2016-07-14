@@ -118,7 +118,7 @@ Returns numeric version of libkrisp that linked.
 
 =head2 $kr->ip2long ($ipv4_address)
 
-Caculates unsigned long value about given IPv4 address.
+Calculates unsigned long value about given IPv4 address.
 
 =over 4
 
@@ -130,7 +130,7 @@ IPv4 address
 
 =head2 $kr->long2ip ($long_ip)
 
-Caculates IPv4 address about given unsigend long address.
+Calculates IPv4 address about given unsigend long address.
 
 =over 4
 
@@ -142,7 +142,7 @@ Unsigned long ip address
 
 =head2 $kr->netmask ($start, $end);
 
-Caculates network mask that give range between $start and $end.
+Calculates network mask that give range between $start and $end.
 
 =over 4
 
@@ -158,7 +158,7 @@ Last IPv4 address of Range
 
 =head2 $kr->mask2prefix ($mask);
 
-Caculates network prefix about given network mask.
+Calculates network prefix about given network mask.
 
 =over 4
 
@@ -170,7 +170,7 @@ Network mask address
 
 =head2 $kr->prefix2mask ($prefix);
 
-Caculates network mask about given network prefix.
+Calculates network mask about given network prefix.
 
 =over 4
 
@@ -182,7 +182,7 @@ Network prefix
 
 =head2 $kr->network ($ipv4, $mask);
 
-Caculates network address about given IP address and network mask.
+Calculates network address about given IP address and network mask.
 
 =over 4
 
@@ -198,7 +198,7 @@ Network mask
 
 =head2 $kr->broadcast ($ipv4, $mask);
 
-Caculates broadcast address about given IP address and network mask.
+Calculates broadcast address about given IP address and network mask.
 
 =over 4
 
@@ -221,7 +221,7 @@ Open the krisp database handle.
 =item database (optional)
 
 Specifies krisp database file path. If don't given this value,
-libkrisp is excutes by default value that set libkrisp compile
+libkrisp is executes by default value that set libkrisp compile
 times.
 
 =item error (optional)
@@ -234,7 +234,7 @@ error messages on this variable.
 =head2 $kr->search ($open_handle, $host[, $error]);
 
 Returns network information about given host that includes
-netowork informations, nation informations and isp informations.
+network information, nation information and isp information.
 
 =over 4
 
@@ -255,12 +255,12 @@ error messages on this variable.
 
 =head2 $kr->search_ex ($open_handle, $host, $table[, $error]);
 
-If you want to search your table taht makes by you in krisp database,
+If you want to search your table that makes by you in krisp database,
 you can use this method.
 
 Search on given table and returns network information about given
-host that includes netowork informations, nation informations and
-isp informations.
+host that includes network information, nation information and
+isp information.
 
 =over 4
 
