@@ -44,6 +44,11 @@ This module requires these libraries:
   If you use libkrisp 3.0.x, use KRISP module 2.0.x version.
 
 
+USAGE
+
+See also ```man 3 KRISP``` or wiki page (https://github.com/Joungkyun/perl-KRISP/wiki)
+
+
 COPYRIGHT AND LICENCE
 
 Copyright (C) 2016 by JoungKyun.Kim <http://oops.org>
