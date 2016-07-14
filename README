@@ -18,6 +18,9 @@ DESCRIPTION
 
 This is perl module that use libkrisp.
 
+KRISP provides network cacluration and searching isp/country information
+for given ip address.
+
 
 INSTALLATION
 
